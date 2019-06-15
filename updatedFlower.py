@@ -82,19 +82,6 @@ for i in range(10000):
         weight[0] -= LEARNING_RATE*d_costs[0]
         weight[1] -= LEARNING_RATE*d_costs[1]
         weight[2] -= LEARNING_RATE*d_costs[2]
-        
-    #if i % 100 == 0:
-        #print("Training Session: "+ str(i))
-        #accuracyList.append(accuracy())
-
-        #costSum = 0
-       #for a in range(len(data)):
-        #    point = data[a]
-         #   z = point[0]*w1 + point[1]*w2 +b
-          #  pred = sigmoid(z)
-           # target = point[2]
-            #costSum += np.square(pred - target)
-        #costsList.append(costSum/len(data))   
              
 print("End of Training")
 print(str(weight[0]))
