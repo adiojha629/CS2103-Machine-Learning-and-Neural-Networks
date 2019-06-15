@@ -1,1 +1,1 @@
-# CS2103-Machine-Learning-Neural-Networks-and
+# CS2103-Machine-Learning-and-Neural-Networks
