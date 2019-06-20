@@ -1,8 +1,8 @@
 from matplotlib import pyplot as plt
 import numpy as np
-
-
+          
 # goes length, width, color(red =1, blue -0)
+
 data = [{'data': [3,1.5], 'target': 1}, {'data':[2,1], 'target': 0},
         {'data': [4,1.5], 'target': 1}, {'data': [3,1], 'target': 0},
         {'data': [3.5,.5], 'target': 1}, {'data': [2,.5], 'target': 0},
@@ -17,8 +17,6 @@ LEARNING_RATE = 0.2
 def sigmoid(x):
     return 1/(1+np.exp(-x))
 
-def sigmoid_p(x):#derivative of sigmoid
-    return sigmoid(x)*(1-sigmoid(x))
 
 ### Testing results with Test Data
 def accuracy(w):
@@ -48,53 +46,79 @@ def fwdProp(p, w):
         return pred
     else:
         return False
+
+
+def cost(p,w):
+    pred = fwdProp(p, w)
+    if(pred != False):
+        targetValue = p['target']
+        return np.square(targetValue - pred)
+    else:
+        return False
   
 def backProp(p,w):
     ### Backward propogation
-    H = 1e-18 # Might have to change later.
-    if(p['target']):
+    H = 1e-15 # Might have to change later.
+  
+
+    if(p['target'] == 1 or p['target'] == 0 ):
         d_costs = []
         for i in range(len(w)):
-            w_temp1 = w
-            w_temp2 = w
+            w_temp1 = w.copy()
+            w_temp2 = w.copy()
+            #if(sameArray(w_temp1,w)):
+             #   print("Weights and Temp 1 are the same")
+            #printArray(w)
+            #printArray(w_temp1)
+            #printArray(w_temp2)
+            #print("Temp1 before"+ str(w_temp1[i]),end ="  ")
+           
             w_temp1[i] += H
             w_temp2[i] -= H
-            d_costs.append((fwdProp(p,w_temp1)-fwdProp(p,w_temp2))/(2*H))
+           # print("Temp1 after"+ str(w_temp1[i]),end ="  ")
+            
+            #if(sameArray(w_temp1,w)):
+             #   print("After Adding H, Weights and Temp 1 are the same")
+            #printArray(w_temp1)
+            #printArray(w_temp2)
+            
+            d_costs.append((cost(p,w_temp1)-cost(p,w_temp2))/(2*H))
+        print(d_costs)
+
         return d_costs     
     else:
         return False
 
 
-###training loop
 
-weight = [np.random.randn(), np.random.randn(), np.random.randn()]
-
-#print(accuracy())
-#accuracyList.append(accuracy())
-
-for i in range(10000):
-    ri = np.random.randint(len(data)) #random index that falls inside data's index's range
-    prediction = fwdProp(data[ri], weight)    ### Need cost to be a list with lenght 4 (?)
+        
+def trainNetwork():
+    weight = [np.random.randn(), np.random.randn(), np.random.randn()]
+    print("Weights Before Training")
+    print(weight)
+        
     
-    d_costs = backProp(data[ri], weight)
+    for i in range(1000):
+        ri = np.random.randint(len(data)) #random index that falls inside data's index's range
+        #prediction = fwdProp(data[ri], weight)    ### Need cost to be a list with lenght 4 (?)
+        
+        d_costs = backProp(data[ri], weight)
+       
+        if(d_costs):
+            weight[0] -= LEARNING_RATE*d_costs[0]
+            weight[1] -= LEARNING_RATE*d_costs[1]
+            weight[2] -= LEARNING_RATE*d_costs[2]
+    print("Weights After Training")
+    print(weight)
     
-    if(d_costs):
-        weight[0] -= LEARNING_RATE*d_costs[0]
-        weight[1] -= LEARNING_RATE*d_costs[1]
-        weight[2] -= LEARNING_RATE*d_costs[2]
-             
-print("End of Training")
-print(str(weight[0]))
-print(str(weight[1]))
-print(str(weight[2]))
-accuracy(weight)
+    return weight
 
-pred = fwdProp(mystery_flower, weight)
+        
+    
 
-print("Prediction for Mystery Flower: "+ str(pred))
+pred = fwdProp(mystery_flower, trainNetwork())
 
-#print(accuracy())
+print("\nPrediction for Mystery Flower: "+ str(pred))
 
-#accuracyList.append(accuracy())
+print(accuracy(trainNetwork()))
 
-#plt.plot(accuracyList)
