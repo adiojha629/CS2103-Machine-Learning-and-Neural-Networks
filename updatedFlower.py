@@ -1,7 +1,8 @@
 from matplotlib import pyplot as plt
 import numpy as np
-           
-# goes length, width, color(red =1, blue =0)
+          
+# goes length, width, color(red =1, blue -0)
+
 data = [{'data': [3,1.5], 'target': 1}, {'data':[2,1], 'target': 0},
         {'data': [4,1.5], 'target': 1}, {'data': [3,1], 'target': 0},
         {'data': [3.5,.5], 'target': 1}, {'data': [2,.5], 'target': 0},
@@ -15,6 +16,7 @@ LEARNING_RATE = 0.2
 
 def sigmoid(x):
     return 1/(1+np.exp(-x))
+
 
 ### Testing results with Test Data
 def accuracy(w):
@@ -44,6 +46,7 @@ def fwdProp(p, w):
         return pred
     else:
         return False
+
 
 def cost(p,w):
     pred = fwdProp(p, w)
@@ -81,12 +84,13 @@ def backProp(p,w):
             
             d_costs.append((cost(p,w_temp1)-cost(p,w_temp2))/(2*H))
         print(d_costs)
+
         return d_costs     
     else:
         return False
 
 
-###training loop
+
         
 def trainNetwork():
     weight = [np.random.randn(), np.random.randn(), np.random.randn()]
@@ -117,6 +121,4 @@ pred = fwdProp(mystery_flower, trainNetwork())
 print("\nPrediction for Mystery Flower: "+ str(pred))
 
 print(accuracy(trainNetwork()))
-
-
 
