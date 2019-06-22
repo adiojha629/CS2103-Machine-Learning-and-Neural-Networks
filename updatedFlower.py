@@ -83,7 +83,7 @@ def backProp(p,w):
             #printArray(w_temp2)
             
             d_costs.append((cost(p,w_temp1)-cost(p,w_temp2))/(2*H))
-        print(d_costs)
+        #print(d_costs)
 
         return d_costs     
     else:
