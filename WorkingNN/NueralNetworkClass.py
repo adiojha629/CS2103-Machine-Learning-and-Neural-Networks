@@ -46,6 +46,15 @@ class NueralNetwork:
             self.network.append(level)
         #printArray(self.network)
     
+
+
+    def inputData(self,x):
+        '''
+            if x has a target then train
+            else give me prediction
+            
+        '''
+
     def fwdProp(self,p):
         enterData = []
         enterData.append(p['data'])
@@ -58,6 +67,39 @@ class NueralNetwork:
         outputLayer = Perceptron(self.net_setup[-1])
         return outputLayer.getPred(enterData[-1])
     
+
+    def cost(self,p):
+        pred = self.fwdProp(p)
+        return np.square(p['target'] - pred)
+        
+    def bwProp(self,p):
+        '''
+            get all the weights of all nodes in the network
+            ie all_weights= [
+                            [weights for N00: [w1,w2,w3],      weights for N01, ]==> lvl 0 
+                            
+                            
+                            
+                            
+                            
+                            [weights for N10, weights for N11,[  ] ]==> lvl 1
+                            ]
+            loop through each node, can do b/c self.network
+            oldWeights = node.getWeights()
+            i will go from 0 to len(oldWeights)    
+                wTemp_1 = oldweights
+                wTemp_1[i] += H
+                wTemp_2 = oldweights
+                wTemp_2[i] -= H
+                node.changeWeight(wTemp_1)
+                m1 = cost(p)==> for whole network
+                node.changeWeight(wTemp_2)
+                derivative =( m1 - cost(p) )/(2*H)
+                d_cost.append(derivative)
+            
+            
+        '''
+
         
 
 data = [{'data': [3,1.5], 'target': 1}, {'data':[2,1], 'target': 0},
