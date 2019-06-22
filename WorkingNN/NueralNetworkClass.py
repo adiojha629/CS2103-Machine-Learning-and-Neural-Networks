@@ -46,13 +46,15 @@ class NueralNetwork:
             self.network.append(level)
         #printArray(self.network)
     
+
+
     def inputData(self,x):
         '''
             if x has a target then train
             else give me prediction
             
         '''
-    
+
     def fwdProp(self,p):
         enterData = []
         enterData.append(p['data'])
@@ -65,6 +67,7 @@ class NueralNetwork:
         outputLayer = Perceptron(self.net_setup[-1])
         return outputLayer.getPred(enterData[-1])
     
+
     def cost(self,p):
         pred = self.fwdProp(p)
         return np.square(p['target'] - pred)
@@ -96,6 +99,7 @@ class NueralNetwork:
             
             
         '''
+
         
 
 data = [{'data': [3,1.5], 'target': 1}, {'data':[2,1], 'target': 0},
